@@ -2,10 +2,14 @@ package com.example.alertdialog;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -61,5 +65,40 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
+    }
+
+    public void displayMaterialAlertDialog(View view)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
+        View view1 = LayoutInflater.from(MainActivity.this)
+                        .inflate(R.layout.material_dialog_layout,
+                                (ConstraintLayout)findViewById(R.id.layoutDialogContainer));
+        builder.setView(view1);
+        builder.setCancelable(false);
+
+        final AlertDialog dialog = builder.create();
+
+        view1.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Cancel !", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        view1.findViewById(R.id.okayBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Okay !", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        if (dialog.getWindow() != null)
+        {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+
+        dialog.show();
     }
 }
